@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#FAF6F0">
+  <title>Ignacio & Alice — Plan de Table</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #FAF6F0;
+      --cream-deep: #F2EBE0;
+      --cream-shadow: #EBE2D2;
+      --ink: #2A2826;
+      --ink-soft: #6E6760;
+      --ink-faint: #9A938A;
+      --sage: #758D6F;
+      --sage-deep: #4F6450;
+      --gold: #B8956A;
+      --gold-deep: #8C6E4A;
+      --line: #DCD3C4;
+      --line-soft: #E8E0D2;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Lora', Georgia, serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overscroll-behavior: none;
+    }
+
+    /* Subtle paper grain */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 1px 1px, rgba(42, 40, 38, 0.018) 1px, transparent 0);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ========== HEADER ========== */
+    .header {
+      text-align: center;
+      padding: 3.5rem 1.5rem 2.2rem;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, transparent 0%, var(--cream-shadow) 100%);
+    }
+
+    .couple {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: clamp(2.2rem, 7vw, 3.4rem);
+      letter-spacing: 0.015em;
+      line-height: 1.05;
+      color: var(--ink);
+    }
+
+    .couple-amp {
+      font-style: italic;
+      color: var(--gold);
+      font-weight: 300;
+      margin: 0 0.18em;
+      font-size: 0.92em;
+    }
+
+    .meta {
+      margin-top: 1rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      font-weight: 500;
+    }
+
+    .meta-dot {
+      display: inline-block;
+      width: 3px;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 50%;
+      vertical-align: middle;
+      margin: 0 0.85em;
+      transform: translateY(-2px);
+    }
+
+    /* ========== ORNAMENT ========== */
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin: 0 auto 1.8rem;
+      max-width: 320px;
+    }
+
+    .ornament-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--line), transparent);
+    }
+
+    .ornament-symbol {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ========== SEARCH VIEW ========== */
+    .search-section {
+      padding: 3rem 1.5rem 4rem;
+      max-width: 540px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+      animation: fadeIn 0.6s ease both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .search-prompt {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-style: italic;
+      font-size: clamp(1.4rem, 4vw, 1.7rem);
+      text-align: center;
+      color: var(--sage-deep);
+      margin-bottom: 2rem;
+      line-height: 1.3;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 1.05rem 1.3rem;
+      font-family: 'Lora', serif;
+      font-size: 1.05rem;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      letter-spacing: 0.01em;
+    }
+
+    .search-input::placeholder {
+      color: var(--ink-faint);
+      font-style: italic;
+    }
+
+    .search-input:focus {
+      border-color: var(--sage);
+      box-shadow: 0 0 0 4px rgba(117, 141, 111, 0.08);
+    }
+
+    /* ========== RESULTS ========== */
+    .results {
+      list-style: none;
+      margin-top: 0.6rem;
+      max-height: 380px;
+      overflow-y: auto;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      display: none;
+      box-shadow: 0 4px 20px rgba(42, 40, 38, 0.04);
+    }
+
+    .results.active {
+      display: block;
+      animation: slideDown 0.25s ease both;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-item {
+      padding: 1rem 1.3rem;
+      border-bottom: 1px solid var(--line-soft);
+      cursor: pointer;
+      transition: background-color 0.18s ease, padding-left 0.18s ease;
+      list-style: none;
+    }
+
+    .result-item:last-child { border-bottom: none; }
+
+    .result-item:hover,
+    .result-item:focus,
+    .result-item.kbd-focus {
+      background: var(--cream-deep);
+      padding-left: 1.6rem;
+      outline: none;
+    }
+
+    .result-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      font-size: 1.2rem;
+      color: var(--ink);
+      letter-spacing: 0.01em;
+    }
+
+    .result-name mark {
+      background: transparent;
+      color: var(--gold-deep);
+      font-weight: 600;
+    }
+
+    .no-results {
+      padding: 1.4rem 1.3rem;
+      text-align: center;
+      font-style: italic;
+      color: var(--ink-soft);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+    }
+
+    /* ========== MAP VIEW ========== */
+    .map-view {
+      display: none;
+      padding: 2.2rem 1rem 3rem;
+      max-width: 880px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+    }
+
+    .map-view.active {
+      display: block;
+      animation: fadeUp 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .selection-info {
+      text-align: center;
+      margin-bottom: 1.8rem;
+    }
+
+    .selection-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 0.6rem;
+    }
+
+    .selection-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 5vw, 2.4rem);
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .selection-table {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--gold-deep);
+      margin-top: 0.6rem;
+    }
+
+    .selection-room {
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--sage-deep);
+      margin-top: 0.4rem;
+    }
+
+    /* ========== SVG MAP ========== */
+    .map-frame {
+      background: var(--cream);
+      border: 1px solid var(--line);
+      padding: 1rem;
+      box-shadow: 0 2px 24px rgba(42, 40, 38, 0.04);
+      margin-bottom: 1.8rem;
+      position: relative;
+    }
+
+    .map-frame::before,
+    .map-frame::after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border: 1px solid var(--gold);
+      opacity: 0.5;
+    }
+    .map-frame::before {
+      top: -4px; left: -4px;
+      border-right: none; border-bottom: none;
+    }
+    .map-frame::after {
+      bottom: -4px; right: -4px;
+      border-left: none; border-top: none;
+    }
+
+    .map-svg {
+      width: 100%;
+      height: auto;
+      max-height: 65vh;
+      display: block;
+    }
+
+    .table-group {
+      transition: opacity 0.6s ease;
+    }
+
+    .table-group:not(.highlighted) {
+      opacity: 0.22;
+    }
+
+    .table-circle {
+      fill: var(--cream-deep);
+      stroke: var(--ink-soft);
+      stroke-width: 1;
+      transition: fill 0.5s ease, stroke 0.5s ease;
+    }
+
+    .highlighted .table-circle {
+      fill: #FFFAF0;
+      stroke: var(--sage-deep);
+      stroke-width: 1.4;
+    }
+
+    .table-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-weight: 500;
+      fill: var(--ink-soft);
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+      letter-spacing: 0.05em;
+    }
+
+    .highlighted .table-label {
+      fill: var(--ink);
+    }
+
+    .seat {
+      fill: var(--cream);
+      stroke: var(--ink-soft);
+      stroke-width: 0.8;
+      transition: all 0.4s ease;
+    }
+
+    .highlighted .seat {
+      stroke: var(--sage-deep);
+    }
+
+    .seat.selected {
+      fill: var(--gold);
+      stroke: var(--gold-deep);
+      stroke-width: 1.6;
+      animation: seatPulse 2.2s ease-in-out infinite;
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+
+    @keyframes seatPulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.25); }
+    }
+
+    /* Glow ring around selected seat */
+    .seat-halo {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 1;
+      opacity: 0;
+      animation: haloExpand 2.2s ease-out infinite;
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+
+    @keyframes haloExpand {
+      0%   { opacity: 0.5; transform: scale(1); }
+      100% { opacity: 0;   transform: scale(2.4); }
+    }
+
+    /* ========== BACK BUTTON ========== */
+    .back-button-wrap {
+      text-align: center;
+    }
+
+    .back-button {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      background: transparent;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      font-family: 'Lora', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      text-align: center;
+      padding: 2rem 1.5rem 2.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--ink-faint);
+      border-top: 1px solid var(--line-soft);
+    }
+
+    .footer-symbol {
+      color: var(--gold);
+      margin: 0 0.6em;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 600px) {
+      .header { padding: 2.5rem 1rem 1.8rem; }
+      .search-section { padding: 2.2rem 1rem 3rem; }
+      .map-view { padding: 1.5rem 0.6rem 2rem; }
+      .map-frame { padding: 0.5rem; }
+      .meta { font-size: 0.65rem; letter-spacing: 0.28em; }
+    }
+
+    /* Reduce motion for accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+
+    <header class="header">
+      <h1 class="couple">Ignacio<span class="couple-amp">&amp;</span>Alice</h1>
+      <div class="meta">
+        6 Juin 2026 <span class="meta-dot"></span> Château de Santeny
+      </div>
+    </header>
+
+    <main>
+      <!-- ========== SEARCH VIEW ========== -->
+      <section class="search-section" id="searchView">
+        <div class="ornament">
+          <div class="ornament-line"></div>
+          <div class="ornament-symbol">Plan de Table</div>
+          <div class="ornament-line"></div>
+        </div>
+
+        <p class="search-prompt">Trouvez votre place</p>
+
+        <div class="search-box">
+          <input
+            type="text"
+            class="search-input"
+            id="searchInput"
+            placeholder="Tapez votre nom ou prénom…"
+            autocomplete="off"
+            autocapitalize="words"
+            spellcheck="false"
+          >
+          <ul class="results" id="results" role="listbox"></ul>
+        </div>
+      </section>
+
+      <!-- ========== MAP VIEW ========== -->
+      <section class="map-view" id="mapView">
+        <div class="selection-info">
+          <div class="selection-eyebrow">Votre place</div>
+          <div class="selection-name" id="selectionName"></div>
+          <div class="selection-table" id="selectionTable"></div>
+          <div class="selection-room" id="selectionRoom"></div>
+        </div>
+
+        <div class="map-frame">
+          <svg class="map-svg" id="mapSvg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+
+        <div class="back-button-wrap">
+          <button class="back-button" id="backButton">← Retour</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span class="footer-symbol">✦</span>
+      Ignacio &amp; Alice
+      <span class="footer-symbol">✦</span>
+    </footer>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    /* ============================================================
+     *  ÉLÉMENTS
+     * ============================================================ */
+    const $ = id => document.getElementById(id);
+    const searchInput   = $('searchInput');
+    const results       = $('results');
+    const searchView    = $('searchView');
+    const mapView       = $('mapView');
+    const mapSvg        = $('mapSvg');
+    const selectionName = $('selectionName');
+    const selectionTable= $('selectionTable');
+    const selectionRoom = $('selectionRoom');
+    const backButton    = $('backButton');
+
+    /* ============================================================
+     *  CONSTRUCTION DE L'INDEX DES INVITÉS
+     * ============================================================ */
+    const guests = [];
+    WEDDING_DATA.rooms.forEach(room => {
+      room.tables.forEach(table => {
+        table.guests.forEach((guest, seatIndex) => {
+          if (guest && guest.trim()) {
+            guests.push({
+              name: guest.trim(),
+              tableId: table.id,
+              tableName: table.name || `Table ${table.id}`,
+              roomId: room.id,
+              roomName: room.name,
+              seatIndex,
+              totalSeats: table.guests.length
+            });
+          }
+        });
+      });
+    });
+
+    /* ============================================================
+     *  RECHERCHE (insensible aux accents et à la casse)
+     * ============================================================ */
+    function normalize(str) {
+      return str.toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .trim();
+    }
+
+    function filter(query) {
+      const q = normalize(query);
+      if (!q) return [];
+      return guests
+        .filter(g => normalize(g.name).includes(q))
+        .sort((a, b) => {
+          // Prioritize matches at the start of name parts
+          const aStart = normalize(a.name).startsWith(q) ? 0 : 1;
+          const bStart = normalize(b.name).startsWith(q) ? 0 : 1;
+          return aStart - bStart || a.name.localeCompare(b.name);
+        })
+        .slice(0, 25);
+    }
+
+    function highlightMatch(name, query) {
+      if (!query.trim()) return name;
+      const q = normalize(query);
+      const normName = normalize(name);
+      const idx = normName.indexOf(q);
+      if (idx === -1) return name;
+      return name.slice(0, idx)
+           + '<mark>' + name.slice(idx, idx + q.length) + '</mark>'
+           + name.slice(idx + q.length);
+    }
+
+    let currentMatches = [];
+    let kbdIdx = -1;
+
+    function renderResults(items) {
+      currentMatches = items;
+      kbdIdx = -1;
+
+      if (!items.length) {
+        if (searchInput.value.trim()) {
+          results.innerHTML = '<li class="no-results">Aucun nom trouvé</li>';
+          results.classList.add('active');
+        } else {
+          results.classList.remove('active');
+          results.innerHTML = '';
+        }
+        return;
+      }
+
+      results.innerHTML = items.map((g, i) => `
+        <li class="result-item" data-index="${i}" tabindex="0" role="option">
+          <div class="result-name">${highlightMatch(g.name, searchInput.value)}</div>
+        </li>
+      `).join('');
+      results.classList.add('active');
+
+      [...results.querySelectorAll('.result-item')].forEach((el, i) => {
+        el.addEventListener('click', () => selectGuest(items[i]));
+      });
+    }
+
+    searchInput.addEventListener('input', () => {
+      renderResults(filter(searchInput.value));
+    });
+
+    /* Keyboard navigation */
+    searchInput.addEventListener('keydown', (e) => {
+      const items = results.querySelectorAll('.result-item');
+      if (!items.length) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        kbdIdx = (kbdIdx + 1) % items.length;
+        items.forEach(el => el.classList.remove('kbd-focus'));
+        items[kbdIdx].classList.add('kbd-focus');
+        items[kbdIdx].scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        kbdIdx = (kbdIdx - 1 + items.length) % items.length;
+        items.forEach(el => el.classList.remove('kbd-focus'));
+        items[kbdIdx].classList.add('kbd-focus');
+        items[kbdIdx].scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const idx = kbdIdx >= 0 ? kbdIdx : 0;
+        if (currentMatches[idx]) selectGuest(currentMatches[idx]);
+      } else if (e.key === 'Escape') {
+        searchInput.value = '';
+        renderResults([]);
+      }
+    });
+
+    /* ============================================================
+     *  RENDU DU PLAN
+     * ============================================================ */
+    function renderMap(guest) {
+      const room = WEDDING_DATA.rooms.find(r => r.id === guest.roomId);
+      if (!room) return;
+
+      const tables = room.tables;
+      const padding = 95;
+      const xs = tables.map(t => t.x);
+      const ys = tables.map(t => t.y);
+      const minX = Math.min(...xs) - padding;
+      const minY = Math.min(...ys) - padding;
+      const maxX = Math.max(...xs) + padding;
+      const maxY = Math.max(...ys) + padding;
+
+      mapSvg.setAttribute('viewBox', `${minX} ${minY} ${maxX - minX} ${maxY - minY}`);
+
+      const svgFragments = tables.map(table => {
+        const isSelectedTable = table.id === guest.tableId;
+        const seatCount = table.guests.length;
+        const tableR    = 34;
+        const seatR     = 9;
+        const seatOffset = tableR + seatR + 5;
+
+        // Seats arranged clockwise from top
+        const seatsHtml = table.guests.map((seatGuest, i) => {
+          const angle = (i / seatCount) * 2 * Math.PI - Math.PI / 2;
+          const sx = table.x + seatOffset * Math.cos(angle);
+          const sy = table.y + seatOffset * Math.sin(angle);
+          const isSelectedSeat = isSelectedTable && i === guest.seatIndex;
+
+          const halo = isSelectedSeat
+            ? `<circle class="seat-halo" cx="${sx}" cy="${sy}" r="${seatR}"/>`
+            : '';
+
+          return `
+            ${halo}
+            <circle class="seat ${isSelectedSeat ? 'selected' : ''}"
+                    cx="${sx}" cy="${sy}" r="${seatR}"/>
+          `;
+        }).join('');
+
+        const labelText = table.name && table.name.length <= 14
+          ? table.name
+          : (table.name ? `T. ${table.id}` : `${table.id}`);
+
+        return `
+          <g class="table-group ${isSelectedTable ? 'highlighted' : ''}" data-table="${table.id}">
+            <circle class="table-circle" cx="${table.x}" cy="${table.y}" r="${tableR}"/>
+            <text class="table-label" x="${table.x}" y="${table.y}">${labelText}</text>
+            ${seatsHtml}
+          </g>
+        `;
+      }).join('');
+
+      mapSvg.innerHTML = svgFragments;
+    }
+
+    /* ============================================================
+     *  SÉLECTION D'UN INVITÉ
+     * ============================================================ */
+    function selectGuest(guest) {
+      selectionName.textContent  = guest.name;
+      selectionTable.textContent = guest.tableName;
+      selectionRoom.textContent  = guest.roomName;
+
+      renderMap(guest);
+
+      searchView.style.display = 'none';
+      mapView.classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Hide soft keyboard on mobile
+      searchInput.blur();
+    }
+
+    backButton.addEventListener('click', () => {
+      mapView.classList.remove('active');
+      searchView.style.display = '';
+      searchInput.value = '';
+      results.classList.remove('active');
+      results.innerHTML = '';
+    });
+
+    /* Close results when clicking outside */
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.search-box')) {
+        if (!searchInput.value.trim()) {
+          results.classList.remove('active');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
