@@ -161,7 +161,7 @@ const WEDDING_DATA = {
       tables: [
         {
           id: 9,
-          x: 290, y: 110,
+          x: 270, y: 100,
           guests: [
             "Charles Hebert",
             "Mazen Hamdan",
@@ -176,7 +176,7 @@ const WEDDING_DATA = {
         },
         {
           id: 10,
-          x: 510, y: 110,
+          x: 530, y: 100,
           guests: [
             "Jeanne Madranges",
             "Elie Madranges",
@@ -192,7 +192,7 @@ const WEDDING_DATA = {
         },
         {
           id: 11,
-          x: 290, y: 290,
+          x: 270, y: 300,
           guests: [
             "Pilar Urquiza",
             "Barbara Olave",
@@ -208,7 +208,7 @@ const WEDDING_DATA = {
         },
         {
           id: 12,
-          x: 510, y: 290,
+          x: 530, y: 300,
           guests: [
             "Olesia Khrapunova",
             "Emma Caffrey",
@@ -223,7 +223,7 @@ const WEDDING_DATA = {
         },
         {
           id: 13,
-          x: 290, y: 470,
+          x: 270, y: 500,
           guests: [
             "Francisco Garri",
             "Nicolas Ortega",
@@ -238,7 +238,7 @@ const WEDDING_DATA = {
         },
         {
           id: 14,
-          x: 510, y: 470,
+          x: 530, y: 500,
           guests: [
             "Francisca Troncoso",
             "Ilanit Hirnheimer",
