@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#FAF6F0">
-  <title>Ignacio & Alice — Plan de Table</title>
+  <title>Alice & Ignacio — Plan de Table</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Lora:wght@400;500&display=swap" rel="stylesheet">
@@ -404,6 +404,13 @@
       stroke-width: 1.4;
     }
 
+    /* La terrasse est mise en relief (lieu du cocktail) */
+    .orient-terrasse {
+      fill: var(--gold-soft);
+      stroke: var(--gold-deep);
+      stroke-width: 1.4;
+    }
+
     .orient-landmark-name {
       font-size: 9px;
       letter-spacing: 0.25em;
@@ -412,6 +419,22 @@
       dominant-baseline: central;
       font-family: 'Lora', serif;
       font-weight: 600;
+    }
+
+    /* "TERRASSE" prend la teinte or, distincte du hall */
+    .orient-terrasse + .orient-landmark-name {
+      fill: var(--gold-deep);
+    }
+
+    .orient-landmark-sublabel {
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      fill: var(--gold-deep);
+      text-anchor: middle;
+      dominant-baseline: central;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 500;
     }
 
     .orient-arrow {
@@ -586,7 +609,7 @@
   <div class="app">
 
     <header class="header">
-      <h1 class="couple">Ignacio<span class="couple-amp">&amp;</span>Alice</h1>
+      <h1 class="couple">Alice<span class="couple-amp">&amp;</span>Ignacio</h1>
       <div class="meta">
         6 Juin 2026 <span class="meta-dot"></span> Château de Santeny
       </div>
@@ -640,7 +663,7 @@
 
     <footer class="footer">
       <span class="footer-symbol">✦</span>
-      Ignacio &amp; Alice
+      Alice &amp; Ignacio
       <span class="footer-symbol">✦</span>
     </footer>
   </div>
@@ -792,36 +815,37 @@
 
       orientation.innerHTML = `
         <div class="orientation-caption">Plan du château</div>
-        <svg class="orientation-svg" viewBox="0 0 400 235" xmlns="http://www.w3.org/2000/svg">
+        <svg class="orientation-svg" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
 
-          <!-- TERRASSE (au nord) — forme légèrement bombée -->
-          <path class="orient-landmark"
-                d="M 120 34 L 120 22 Q 120 7 142 7 L 258 7 Q 280 7 280 22 L 280 34 Z"/>
-          <text class="orient-landmark-name" x="200" y="22">TERRASSE</text>
+          <!-- TERRASSE (au nord) — repère du cocktail -->
+          <path class="orient-landmark orient-terrasse"
+                d="M 120 44 L 120 22 Q 120 7 142 7 L 258 7 Q 280 7 280 22 L 280 44 Z"/>
+          <text class="orient-landmark-name" x="200" y="20">TERRASSE</text>
+          <text class="orient-landmark-sublabel" x="200" y="35">cocktail</text>
 
           <!-- Marches reliant la terrasse au château -->
-          <line class="orient-step" x1="182" y1="38" x2="218" y2="38"/>
-          <line class="orient-step" x1="186" y1="43" x2="214" y2="43"/>
+          <line class="orient-step" x1="182" y1="48" x2="218" y2="48"/>
+          <line class="orient-step" x1="186" y1="53" x2="214" y2="53"/>
 
-          <!-- Contour du château (proportions proches du plan réel) -->
-          <rect class="orient-chateau" x="25" y="48" width="350" height="135"/>
+          <!-- Contour du château -->
+          <rect class="orient-chateau" x="25" y="58" width="350" height="125"/>
 
           <!-- Petits ergots évoquant les bow-windows aux extrémités -->
-          <rect class="orient-bay" x="18" y="78" width="7" height="50"/>
-          <rect class="orient-bay" x="375" y="78" width="7" height="50"/>
+          <rect class="orient-bay" x="18" y="85" width="7" height="50"/>
+          <rect class="orient-bay" x="375" y="85" width="7" height="50"/>
 
           <!-- Salon Victoria (côté est-nord, près de la terrasse) -->
           <g class="orient-room ${isVictoria ? 'is-active' : ''}">
-            <rect x="245" y="60" width="118" height="52" rx="1"/>
-            <text class="orient-room-name" x="304" y="79">Salon Victoria</text>
-            <text class="orient-room-meta" x="304" y="98">Tables 1 – 8</text>
+            <rect x="245" y="68" width="118" height="48" rx="1"/>
+            <text class="orient-room-name" x="304" y="85">Salon Victoria</text>
+            <text class="orient-room-meta" x="304" y="103">Tables 1 – 8</text>
           </g>
 
           <!-- Salon Joséphine (côté est-sud, près du hall) -->
           <g class="orient-room ${isJosephine ? 'is-active' : ''}">
-            <rect x="245" y="120" width="118" height="52" rx="1"/>
-            <text class="orient-room-name" x="304" y="139">Salon Joséphine</text>
-            <text class="orient-room-meta" x="304" y="158">Tables 9 – 14</text>
+            <rect x="245" y="125" width="118" height="48" rx="1"/>
+            <text class="orient-room-name" x="304" y="142">Salon Joséphine</text>
+            <text class="orient-room-meta" x="304" y="160">Tables 9 – 14</text>
           </g>
 
           <!-- Marches reliant le hall au château -->
@@ -829,15 +853,10 @@
           <line class="orient-step" x1="186" y1="193" x2="214" y2="193"/>
 
           <!-- HALL D'ENTRÉE (au sud) -->
-          <rect class="orient-landmark" x="135" y="197" width="130" height="24"/>
-          <text class="orient-landmark-name" x="200" y="210">HALL D'ENTRÉE</text>
-
-          <!-- Flèche indiquant le sens d'arrivée des invités -->
-          <g transform="translate(200, 232)">
-            <path class="orient-arrow" d="M-7,4 L7,4 L0,-5 Z"/>
-          </g>
+          <rect class="orient-landmark" x="135" y="197" width="130" height="22"/>
+          <text class="orient-landmark-name" x="200" y="209">HALL D'ENTRÉE</text>
         </svg>
-        <div class="orientation-legend">Les invités arrivent par le hall d'entrée</div>
+        <div class="orientation-legend">Pour rappel, le cocktail a eu lieu sur la terrasse</div>
       `;
     }
 
