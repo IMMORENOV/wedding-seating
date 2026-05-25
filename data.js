@@ -11,7 +11,7 @@
  * ============================================================ */
 
 const WEDDING_DATA = {
-  couple: "Ignacio & Alice",
+  couple: "Alice & Ignacio",
   date: "6 Juin 2026",
   venue: "Château de Santeny",
 
