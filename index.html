@@ -22,6 +22,7 @@
       --sage-deep: #4F6450;
       --gold: #B8956A;
       --gold-deep: #8C6E4A;
+      --gold-soft: #E8D5B7;
       --line: #DCD3C4;
       --line-soft: #E8E0D2;
     }
@@ -38,7 +39,6 @@
       overscroll-behavior: none;
     }
 
-    /* Subtle paper grain */
     body::before {
       content: '';
       position: fixed;
@@ -291,9 +291,9 @@
     .selection-table {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       color: var(--gold-deep);
-      margin-top: 0.6rem;
+      margin-top: 0.7rem;
     }
 
     .selection-room {
@@ -302,6 +302,120 @@
       text-transform: uppercase;
       color: var(--sage-deep);
       margin-top: 0.4rem;
+    }
+
+    /* ========== ORIENTATION (mini-plan du château) ========== */
+    .orientation {
+      max-width: 420px;
+      margin: 0 auto 1.8rem;
+      padding: 0 0.5rem;
+    }
+
+    .orientation-caption {
+      text-align: center;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 0.7rem;
+    }
+
+    .orientation-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .orientation-legend {
+      text-align: center;
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--ink-soft);
+      margin-top: 0.4rem;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* Contour du château : trait fin d'architecte */
+    .orient-chateau {
+      fill: none;
+      stroke: var(--line);
+      stroke-width: 1.2;
+    }
+
+    /* Bow-windows aux extrémités du château */
+    .orient-bay {
+      fill: none;
+      stroke: var(--line);
+      stroke-width: 1.2;
+    }
+
+    /* Marches entre château et terrasse / hall */
+    .orient-step {
+      stroke: var(--ink-faint);
+      stroke-width: 1;
+      fill: none;
+    }
+
+    /* Salons (boîtes intérieures) */
+    .orient-room rect {
+      fill: var(--cream-deep);
+      stroke: var(--ink-soft);
+      stroke-width: 1;
+      transition: all 0.5s ease;
+    }
+
+    .orient-room.is-active rect {
+      fill: var(--gold-soft);
+      stroke: var(--gold-deep);
+      stroke-width: 2;
+    }
+
+    .orient-room-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-weight: 500;
+      fill: var(--ink-soft);
+      text-anchor: middle;
+      dominant-baseline: central;
+      transition: fill 0.5s ease, font-weight 0.5s ease;
+    }
+
+    .orient-room.is-active .orient-room-name {
+      fill: var(--gold-deep);
+      font-weight: 600;
+    }
+
+    .orient-room-meta {
+      font-size: 8.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      fill: var(--ink-faint);
+      text-anchor: middle;
+    }
+
+    .orient-room.is-active .orient-room-meta {
+      fill: var(--gold-deep);
+    }
+
+    /* Repères : terrasse (au nord) et hall d'entrée (au sud) */
+    .orient-landmark {
+      fill: var(--cream);
+      stroke: var(--sage-deep);
+      stroke-width: 1.4;
+    }
+
+    .orient-landmark-name {
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      fill: var(--sage-deep);
+      text-anchor: middle;
+      dominant-baseline: central;
+      font-family: 'Lora', serif;
+      font-weight: 600;
+    }
+
+    .orient-arrow {
+      fill: var(--sage-deep);
     }
 
     /* ========== SVG MAP ========== */
@@ -344,76 +458,70 @@
     }
 
     .table-group:not(.highlighted) {
-      opacity: 0.22;
+      opacity: 0.18;
     }
 
+    /* Non-highlighted tables: discreet */
     .table-circle {
       fill: var(--cream-deep);
       stroke: var(--ink-soft);
       stroke-width: 1;
-      transition: fill 0.5s ease, stroke 0.5s ease;
-    }
-
-    .highlighted .table-circle {
-      fill: #FFFAF0;
-      stroke: var(--sage-deep);
-      stroke-width: 1.4;
+      transition: fill 0.5s ease, stroke 0.5s ease, stroke-width 0.5s ease;
     }
 
     .table-label {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 500;
       fill: var(--ink-soft);
       text-anchor: middle;
       dominant-baseline: central;
       pointer-events: none;
       letter-spacing: 0.05em;
-    }
-
-    .highlighted .table-label {
-      fill: var(--ink);
+      transition: fill 0.5s ease, font-size 0.5s ease, font-weight 0.5s ease;
     }
 
     .seat {
       fill: var(--cream);
       stroke: var(--ink-soft);
       stroke-width: 0.8;
-      transition: all 0.4s ease;
+      transition: stroke 0.4s ease, fill 0.4s ease;
+    }
+
+    /* Highlighted table: gold tint, thicker stroke, larger label */
+    .highlighted .table-circle {
+      fill: var(--gold-soft);
+      stroke: var(--gold-deep);
+      stroke-width: 2.2;
+    }
+
+    .highlighted .table-label {
+      fill: var(--gold-deep);
+      font-size: 19px;
+      font-weight: 600;
     }
 
     .highlighted .seat {
-      stroke: var(--sage-deep);
-    }
-
-    .seat.selected {
-      fill: var(--gold);
+      fill: var(--cream);
       stroke: var(--gold-deep);
-      stroke-width: 1.6;
-      animation: seatPulse 2.2s ease-in-out infinite;
-      transform-origin: center;
-      transform-box: fill-box;
+      stroke-width: 1.4;
     }
 
-    @keyframes seatPulse {
-      0%, 100% { transform: scale(1); }
-      50%      { transform: scale(1.25); }
-    }
-
-    /* Glow ring around selected seat */
-    .seat-halo {
+    /* Pulsing halo around the highlighted table */
+    .table-halo {
       fill: none;
       stroke: var(--gold);
-      stroke-width: 1;
+      stroke-width: 1.5;
       opacity: 0;
-      animation: haloExpand 2.2s ease-out infinite;
+      animation: tableHaloPulse 2.4s ease-out infinite;
       transform-origin: center;
       transform-box: fill-box;
     }
 
-    @keyframes haloExpand {
-      0%   { opacity: 0.5; transform: scale(1); }
-      100% { opacity: 0;   transform: scale(2.4); }
+    @keyframes tableHaloPulse {
+      0%   { opacity: 0.55; transform: scale(1); }
+      80%  { opacity: 0;    transform: scale(1.55); }
+      100% { opacity: 0;    transform: scale(1.55); }
     }
 
     /* ========== BACK BUTTON ========== */
@@ -465,7 +573,6 @@
       .meta { font-size: 0.65rem; letter-spacing: 0.28em; }
     }
 
-    /* Reduce motion for accessibility */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -494,7 +601,7 @@
           <div class="ornament-line"></div>
         </div>
 
-        <p class="search-prompt">Trouvez votre place</p>
+        <p class="search-prompt">Trouvez votre table</p>
 
         <div class="search-box">
           <input
@@ -513,11 +620,13 @@
       <!-- ========== MAP VIEW ========== -->
       <section class="map-view" id="mapView">
         <div class="selection-info">
-          <div class="selection-eyebrow">Votre place</div>
+          <div class="selection-eyebrow">Votre table</div>
           <div class="selection-name" id="selectionName"></div>
           <div class="selection-table" id="selectionTable"></div>
           <div class="selection-room" id="selectionRoom"></div>
         </div>
+
+        <div class="orientation" id="orientation"></div>
 
         <div class="map-frame">
           <svg class="map-svg" id="mapSvg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg>
@@ -550,6 +659,7 @@
     const selectionName = $('selectionName');
     const selectionTable= $('selectionTable');
     const selectionRoom = $('selectionRoom');
+    const orientation   = $('orientation');
     const backButton    = $('backButton');
 
     /* ============================================================
@@ -590,7 +700,6 @@
       return guests
         .filter(g => normalize(g.name).includes(q))
         .sort((a, b) => {
-          // Prioritize matches at the start of name parts
           const aStart = normalize(a.name).startsWith(q) ? 0 : 1;
           const bStart = normalize(b.name).startsWith(q) ? 0 : 1;
           return aStart - bStart || a.name.localeCompare(b.name);
@@ -671,14 +780,77 @@
     });
 
     /* ============================================================
+     *  RENDU DU MINI-PLAN DU CHÂTEAU (orientation)
+     *  Inspiré du plan réel du Château de Santeny.
+     *  - Terrasse au nord (avec sa marquise courbée).
+     *  - Hall d'entrée au sud.
+     *  - Les deux salons sont sur le côté est du bâtiment.
+     * ============================================================ */
+    function renderOrientation(guest) {
+      const isVictoria  = guest.roomId === 'salon-victoria';
+      const isJosephine = guest.roomId === 'salon-josephine';
+
+      orientation.innerHTML = `
+        <div class="orientation-caption">Plan du château</div>
+        <svg class="orientation-svg" viewBox="0 0 400 235" xmlns="http://www.w3.org/2000/svg">
+
+          <!-- TERRASSE (au nord) — forme légèrement bombée -->
+          <path class="orient-landmark"
+                d="M 120 34 L 120 22 Q 120 7 142 7 L 258 7 Q 280 7 280 22 L 280 34 Z"/>
+          <text class="orient-landmark-name" x="200" y="22">TERRASSE</text>
+
+          <!-- Marches reliant la terrasse au château -->
+          <line class="orient-step" x1="182" y1="38" x2="218" y2="38"/>
+          <line class="orient-step" x1="186" y1="43" x2="214" y2="43"/>
+
+          <!-- Contour du château (proportions proches du plan réel) -->
+          <rect class="orient-chateau" x="25" y="48" width="350" height="135"/>
+
+          <!-- Petits ergots évoquant les bow-windows aux extrémités -->
+          <rect class="orient-bay" x="18" y="78" width="7" height="50"/>
+          <rect class="orient-bay" x="375" y="78" width="7" height="50"/>
+
+          <!-- Salon Victoria (côté est-nord, près de la terrasse) -->
+          <g class="orient-room ${isVictoria ? 'is-active' : ''}">
+            <rect x="245" y="60" width="118" height="52" rx="1"/>
+            <text class="orient-room-name" x="304" y="79">Salon Victoria</text>
+            <text class="orient-room-meta" x="304" y="98">Tables 1 – 8</text>
+          </g>
+
+          <!-- Salon Joséphine (côté est-sud, près du hall) -->
+          <g class="orient-room ${isJosephine ? 'is-active' : ''}">
+            <rect x="245" y="120" width="118" height="52" rx="1"/>
+            <text class="orient-room-name" x="304" y="139">Salon Joséphine</text>
+            <text class="orient-room-meta" x="304" y="158">Tables 9 – 14</text>
+          </g>
+
+          <!-- Marches reliant le hall au château -->
+          <line class="orient-step" x1="182" y1="188" x2="218" y2="188"/>
+          <line class="orient-step" x1="186" y1="193" x2="214" y2="193"/>
+
+          <!-- HALL D'ENTRÉE (au sud) -->
+          <rect class="orient-landmark" x="135" y="197" width="130" height="24"/>
+          <text class="orient-landmark-name" x="200" y="210">HALL D'ENTRÉE</text>
+
+          <!-- Flèche indiquant le sens d'arrivée des invités -->
+          <g transform="translate(200, 232)">
+            <path class="orient-arrow" d="M-7,4 L7,4 L0,-5 Z"/>
+          </g>
+        </svg>
+        <div class="orientation-legend">Les invités arrivent par le hall d'entrée</div>
+      `;
+    }
+
+    /* ============================================================
      *  RENDU DU PLAN
+     *  (mise en évidence de la table entière, pas du siège)
      * ============================================================ */
     function renderMap(guest) {
       const room = WEDDING_DATA.rooms.find(r => r.id === guest.roomId);
       if (!room) return;
 
       const tables = room.tables;
-      const padding = 95;
+      const padding = 100;
       const xs = tables.map(t => t.x);
       const ys = tables.map(t => t.y);
       const minX = Math.min(...xs) - padding;
@@ -689,36 +861,33 @@
       mapSvg.setAttribute('viewBox', `${minX} ${minY} ${maxX - minX} ${maxY - minY}`);
 
       const svgFragments = tables.map(table => {
-        const isSelectedTable = table.id === guest.tableId;
+        const isHighlighted = table.id === guest.tableId;
         const seatCount = table.guests.length;
         const tableR    = 34;
         const seatR     = 9;
         const seatOffset = tableR + seatR + 5;
+        const haloR     = tableR + seatR + 16;
 
-        // Seats arranged clockwise from top
-        const seatsHtml = table.guests.map((seatGuest, i) => {
+        // Seats arranged clockwise from top (visual only, no specific highlight)
+        const seatsHtml = table.guests.map((_, i) => {
           const angle = (i / seatCount) * 2 * Math.PI - Math.PI / 2;
           const sx = table.x + seatOffset * Math.cos(angle);
           const sy = table.y + seatOffset * Math.sin(angle);
-          const isSelectedSeat = isSelectedTable && i === guest.seatIndex;
-
-          const halo = isSelectedSeat
-            ? `<circle class="seat-halo" cx="${sx}" cy="${sy}" r="${seatR}"/>`
-            : '';
-
-          return `
-            ${halo}
-            <circle class="seat ${isSelectedSeat ? 'selected' : ''}"
-                    cx="${sx}" cy="${sy}" r="${seatR}"/>
-          `;
+          return `<circle class="seat" cx="${sx}" cy="${sy}" r="${seatR}"/>`;
         }).join('');
+
+        // Pulsing halo only on the highlighted table
+        const halo = isHighlighted
+          ? `<circle class="table-halo" cx="${table.x}" cy="${table.y}" r="${haloR}"/>`
+          : '';
 
         const labelText = table.name && table.name.length <= 14
           ? table.name
           : (table.name ? `T. ${table.id}` : `${table.id}`);
 
         return `
-          <g class="table-group ${isSelectedTable ? 'highlighted' : ''}" data-table="${table.id}">
+          <g class="table-group ${isHighlighted ? 'highlighted' : ''}" data-table="${table.id}">
+            ${halo}
             <circle class="table-circle" cx="${table.x}" cy="${table.y}" r="${tableR}"/>
             <text class="table-label" x="${table.x}" y="${table.y}">${labelText}</text>
             ${seatsHtml}
@@ -737,6 +906,7 @@
       selectionTable.textContent = guest.tableName;
       selectionRoom.textContent  = guest.roomName;
 
+      renderOrientation(guest);
       renderMap(guest);
 
       searchView.style.display = 'none';
@@ -744,7 +914,6 @@
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      // Hide soft keyboard on mobile
       searchInput.blur();
     }
 
@@ -756,7 +925,6 @@
       results.innerHTML = '';
     });
 
-    /* Close results when clicking outside */
     document.addEventListener('click', (e) => {
       if (!e.target.closest('.search-box')) {
         if (!searchInput.value.trim()) {
