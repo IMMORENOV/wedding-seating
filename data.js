@@ -27,7 +27,7 @@ const WEDDING_DATA = {
         {
           id: 1,
           name: "Table d'honneur",
-          x: 400, y: 90,
+          x: 400, y: 100,
           guests: [
             "Alice Le Sciellour",
             "Ignacio Moreno",
@@ -43,7 +43,7 @@ const WEDDING_DATA = {
         },
         {
           id: 2,
-          x: 640, y: 200,
+          x: 510, y: 300,
           guests: [
             "Dominique Hamelet",
             "Francis Le Chat",
@@ -58,7 +58,7 @@ const WEDDING_DATA = {
         },
         {
           id: 3,
-          x: 160, y: 200,
+          x: 200, y: 100,
           guests: [
             "Antoine Guillodo",
             "Laurence Lepoittevin",
@@ -74,7 +74,7 @@ const WEDDING_DATA = {
         },
         {
           id: 4,
-          x: 100, y: 360,
+          x: 600, y: 100,
           guests: [
             "Susana Donald",
             "Rolando Nuñez",
@@ -88,7 +88,7 @@ const WEDDING_DATA = {
         },
         {
           id: 5,
-          x: 400, y: 360,
+          x: 290, y: 300,
           guests: [
             "Nico Moreno",
             "Paz Moreno",
@@ -104,7 +104,7 @@ const WEDDING_DATA = {
         },
         {
           id: 6,
-          x: 700, y: 360,
+          x: 400, y: 500,
           guests: [
             "Nicolas Khalife",
             "Sabrina Connan",
@@ -120,7 +120,7 @@ const WEDDING_DATA = {
         },
         {
           id: 7,
-          x: 290, y: 530,
+          x: 200, y: 500,
           guests: [
             "Augustin Rozes",
             "Saliou Dalein",
@@ -134,7 +134,7 @@ const WEDDING_DATA = {
         },
         {
           id: 8,
-          x: 510, y: 530,
+          x: 600, y: 500,
           guests: [
             "Pauline Espinoza",
             "Julie Serret",
