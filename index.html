@@ -4,12 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#FAF6F0">
+  <meta name="format-detection" content="telephone=no">
+
+  <!-- Comportement « app » sur iOS / Android -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Alice & Ignacio">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- Favicon SVG inline (un « & » couleur or sur fond crème) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23FAF6F0'/%3E%3Ctext y='.92em' font-size='95' text-anchor='middle' x='50' font-family='Georgia,serif' font-style='italic' fill='%23B8956A'%3E%26amp;%3C/text%3E%3C/svg%3E">
+
   <title>Alice & Ignacio — Plan de Table</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Lora:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Sélection de texte raffinée */
+    ::selection {
+      background: rgba(184, 149, 106, 0.25);
+      color: var(--ink);
+    }
 
     :root {
       --cream: #FAF6F0;
@@ -25,6 +47,10 @@
       --gold-soft: #E8D5B7;
       --line: #DCD3C4;
       --line-soft: #E8E0D2;
+      --safe-top: env(safe-area-inset-top, 0);
+      --safe-bottom: env(safe-area-inset-bottom, 0);
+      --safe-left: env(safe-area-inset-left, 0);
+      --safe-right: env(safe-area-inset-right, 0);
     }
 
     html, body {
@@ -36,6 +62,7 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      -webkit-text-size-adjust: 100%;
       overscroll-behavior: none;
     }
 
@@ -57,12 +84,14 @@
       min-height: 100dvh;
       display: flex;
       flex-direction: column;
+      padding-left: var(--safe-left);
+      padding-right: var(--safe-right);
     }
 
     /* ========== HEADER ========== */
     .header {
       text-align: center;
-      padding: 3.5rem 1.5rem 2.2rem;
+      padding: calc(3.5rem + var(--safe-top)) 1.5rem 2.2rem;
       border-bottom: 1px solid var(--line);
       background:
         linear-gradient(180deg, transparent 0%, var(--cream-shadow) 100%);
@@ -163,15 +192,18 @@
 
     .search-input {
       width: 100%;
-      padding: 1.05rem 1.3rem;
+      padding: 1.05rem 3rem 1.05rem 1.3rem;
       font-family: 'Lora', serif;
-      font-size: 1.05rem;
+      font-size: 16px; /* >= 16px évite le zoom auto iOS */
       background: var(--cream);
       border: 1px solid var(--line);
       color: var(--ink);
       outline: none;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
       letter-spacing: 0.01em;
+      border-radius: 0;
+      -webkit-appearance: none;
+      appearance: none;
     }
 
     .search-input::placeholder {
@@ -182,6 +214,40 @@
     .search-input:focus {
       border-color: var(--sage);
       box-shadow: 0 0 0 4px rgba(117, 141, 111, 0.08);
+    }
+
+    /* Bouton « effacer » (×) à droite de l'input */
+    .search-clear {
+      position: absolute;
+      right: 0.6rem;
+      top: 1.05rem;
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 0;
+      color: var(--ink-faint);
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+      padding: 0;
+      font-family: 'Lora', serif;
+    }
+
+    .search-clear.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .search-clear:active {
+      background: var(--cream-deep);
+      color: var(--ink);
     }
 
     /* ========== RESULTS ========== */
@@ -207,17 +273,34 @@
     }
 
     .result-item {
-      padding: 1rem 1.3rem;
+      padding: 1.1rem 1.3rem;
+      min-height: 56px;
       border-bottom: 1px solid var(--line-soft);
       cursor: pointer;
-      transition: background-color 0.18s ease, padding-left 0.18s ease;
+      transition: background-color 0.18s ease, transform 0.12s ease, padding-left 0.18s ease;
       list-style: none;
+      display: flex;
+      align-items: center;
+      -webkit-user-select: none;
+      user-select: none;
     }
 
     .result-item:last-child { border-bottom: none; }
 
-    .result-item:hover,
-    .result-item:focus,
+    /* Effets de survol uniquement sur les appareils avec souris */
+    @media (hover: hover) {
+      .result-item:hover {
+        background: var(--cream-deep);
+        padding-left: 1.6rem;
+      }
+    }
+
+    /* Sur tactile : feedback uniquement au tap */
+    .result-item:active {
+      background: var(--cream-shadow);
+      transform: scale(0.995);
+    }
+
     .result-item.kbd-focus {
       background: var(--cream-deep);
       padding-left: 1.6rem;
@@ -553,28 +636,42 @@
     }
 
     .back-button {
-      display: inline-block;
-      padding: 0.75rem 2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2.2rem;
+      min-height: 48px;
       background: transparent;
       border: 1px solid var(--ink);
       color: var(--ink);
       font-family: 'Lora', serif;
-      font-size: 0.78rem;
+      font-size: 0.82rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.12s ease;
+      border-radius: 0;
+      -webkit-appearance: none;
+      appearance: none;
     }
 
-    .back-button:hover {
+    @media (hover: hover) {
+      .back-button:hover {
+        background: var(--ink);
+        color: var(--cream);
+      }
+    }
+
+    .back-button:active {
       background: var(--ink);
       color: var(--cream);
+      transform: scale(0.97);
     }
 
     /* ========== FOOTER ========== */
     .footer {
       text-align: center;
-      padding: 2rem 1.5rem 2.5rem;
+      padding: 2rem 1.5rem calc(2.5rem + var(--safe-bottom));
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
       font-size: 0.95rem;
@@ -589,11 +686,54 @@
 
     /* ========== RESPONSIVE ========== */
     @media (max-width: 600px) {
-      .header { padding: 2.5rem 1rem 1.8rem; }
-      .search-section { padding: 2.2rem 1rem 3rem; }
-      .map-view { padding: 1.5rem 0.6rem 2rem; }
+      .header {
+        padding: calc(2.2rem + var(--safe-top)) 1rem 1.5rem;
+      }
+      .couple { font-size: clamp(2rem, 9vw, 2.8rem); }
+      .meta {
+        font-size: 0.6rem;
+        letter-spacing: 0.26em;
+        margin-top: 0.7rem;
+      }
+      .meta-dot { margin: 0 0.6em; }
+
+      .search-section {
+        padding: 2rem 1rem 2.5rem;
+      }
+      .search-prompt {
+        font-size: clamp(1.25rem, 5vw, 1.5rem);
+        margin-bottom: 1.5rem;
+      }
+
+      .map-view { padding: 1.3rem 0.6rem 2rem; }
       .map-frame { padding: 0.5rem; }
-      .meta { font-size: 0.65rem; letter-spacing: 0.28em; }
+
+      .selection-info { margin-bottom: 1.3rem; }
+      .selection-name { font-size: clamp(1.6rem, 6vw, 2rem); }
+      .selection-table { font-size: 1.2rem; margin-top: 0.5rem; }
+      .selection-room {
+        font-size: 0.66rem;
+        letter-spacing: 0.28em;
+      }
+
+      .orientation { margin-bottom: 1.3rem; max-width: 100%; }
+
+      .footer { padding: 1.5rem 1rem calc(2rem + var(--safe-bottom)); }
+    }
+
+    /* Très petits écrans (anciens iPhone SE, etc.) */
+    @media (max-width: 360px) {
+      .couple { font-size: 1.9rem; }
+      .header { padding: calc(1.8rem + var(--safe-top)) 0.9rem 1.3rem; }
+      .search-section { padding: 1.7rem 0.9rem 2.2rem; }
+      .map-view { padding: 1rem 0.4rem 1.8rem; }
+    }
+
+    /* Mode paysage sur mobile : header plus compact */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .header { padding: 1.2rem 1.5rem 1rem; }
+      .couple { font-size: 1.8rem; }
+      .meta { margin-top: 0.4rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -634,8 +774,13 @@
             placeholder="Tapez votre nom ou prénom…"
             autocomplete="off"
             autocapitalize="words"
+            autocorrect="off"
             spellcheck="false"
+            enterkeyhint="search"
+            inputmode="search"
+            aria-label="Recherche par nom"
           >
+          <button class="search-clear" id="searchClear" type="button" aria-label="Effacer la recherche">×</button>
           <ul class="results" id="results" role="listbox"></ul>
         </div>
       </section>
@@ -675,6 +820,7 @@
      * ============================================================ */
     const $ = id => document.getElementById(id);
     const searchInput   = $('searchInput');
+    const searchClear   = $('searchClear');
     const results       = $('results');
     const searchView    = $('searchView');
     const mapView       = $('mapView');
@@ -772,7 +918,16 @@
     }
 
     searchInput.addEventListener('input', () => {
+      const hasValue = searchInput.value.length > 0;
+      searchClear.classList.toggle('visible', hasValue);
       renderResults(filter(searchInput.value));
+    });
+
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      searchClear.classList.remove('visible');
+      renderResults([]);
+      searchInput.focus();
     });
 
     /* Keyboard navigation */
@@ -921,6 +1076,11 @@
      *  SÉLECTION D'UN INVITÉ
      * ============================================================ */
     function selectGuest(guest) {
+      // Léger retour haptique sur les appareils qui le supportent
+      if (navigator.vibrate) {
+        try { navigator.vibrate(8); } catch (e) { /* ignore */ }
+      }
+
       selectionName.textContent  = guest.name;
       selectionTable.textContent = guest.tableName;
       selectionRoom.textContent  = guest.roomName;
@@ -940,6 +1100,7 @@
       mapView.classList.remove('active');
       searchView.style.display = '';
       searchInput.value = '';
+      searchClear.classList.remove('visible');
       results.classList.remove('active');
       results.innerHTML = '';
     });
